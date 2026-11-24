@@ -5,6 +5,7 @@
   "main": "electron/main.cjs",
   "scripts": {
     "start": "electron .",
+    "shortcut": "powershell -ExecutionPolicy Bypass -File scripts/create-desktop-shortcut.ps1",
     "test": "node --test test/*.test.cjs"
   },
   "author": "tanitetsu",

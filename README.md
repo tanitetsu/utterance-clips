@@ -24,6 +24,16 @@ npm start
 
 初回起動後、設定画面で OpenAI API キーを保存してください（リポジトリには置きません）。
 
+## デスクトップショートカット（Windows）
+
+リポジトリで `npm install` 済みの状態で:
+
+```bash
+npm run shortcut
+```
+
+デスクトップに `utterance-clips.lnk` ができます。アプリ専用アイコンは `assets/icon.ico` です（未設定時に見えていた原子マークは Electron の既定アイコンです）。
+
 ## 出力フォルダ
 
 ```

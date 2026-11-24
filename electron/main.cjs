@@ -15,12 +15,23 @@ const { readMeta } = require("../src/lib/meta.cjs");
 let mainWindow = null;
 const userDataDir = () => getUserDataDir(app);
 
+function resolveAppIcon() {
+  const ico = path.join(__dirname, "../assets/icon.ico");
+  const png = path.join(__dirname, "../assets/icon.png");
+  if (process.platform === "win32" && fs.existsSync(ico)) return ico;
+  if (fs.existsSync(png)) return png;
+  if (fs.existsSync(ico)) return ico;
+  return undefined;
+}
+
 function createWindow() {
+  const icon = resolveAppIcon();
   mainWindow = new BrowserWindow({
     width: 1100,
     height: 760,
     minWidth: 880,
     minHeight: 600,
+    ...(icon ? { icon } : {}),
     webPreferences: {
       preload: path.join(__dirname, "preload.cjs"),
       contextIsolation: true,
