@@ -1,0 +1,22 @@
+{
+  "name": "utterance-clips",
+  "version": "0.1.0",
+  "description": "Windows desktop app: batch speech-to-text into utterance clips with a viewer",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs"
+  },
+  "author": "tanitetsu",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "openai": "^4.104.0"
+  },
+  "devDependencies": {
+    "electron": "^35.2.1"
+  }
+}

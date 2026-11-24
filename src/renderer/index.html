@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; media-src 'self' file: blob:;"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>utterance-clips</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">utterance-clips</div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="process" type="button">処理</button>
+        <button class="tab" data-tab="viewer" type="button">視聴</button>
+        <button class="tab" data-tab="settings" type="button">設定</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="panel-process" class="panel active">
+        <h1>バッチ処理</h1>
+        <p class="lede">長い音声から長無音を短縮し、発話ごとにクリップを作ります。</p>
+        <div class="row">
+          <button id="btn-pick-audio" type="button">音声ファイルを選ぶ</button>
+          <span id="picked-audio" class="muted">未選択</span>
+        </div>
+        <div class="row">
+          <button id="btn-run" type="button" class="primary" disabled>処理を開始</button>
+          <button id="btn-open-result" type="button" disabled>結果フォルダを開く</button>
+        </div>
+        <div class="progress-wrap">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <p id="progress-text" class="muted">待機中</p>
+      </section>
+
+      <section id="panel-viewer" class="panel">
+        <h1>視聴</h1>
+        <p class="lede">上下キーで前後の文を再生。タイトル編集・削除・結合ができます。</p>
+        <div class="row">
+          <button id="btn-open-project" type="button">フォルダを開く</button>
+          <span id="project-path" class="muted">未選択</span>
+        </div>
+        <div class="viewer-layout">
+          <div class="list-pane">
+            <ul id="segment-list"></ul>
+          </div>
+          <div class="detail-pane">
+            <label class="field">
+              <span>タイトル</span>
+              <input id="title-input" type="text" disabled />
+            </label>
+            <label class="field">
+              <span>本文</span>
+              <textarea id="text-view" rows="6" readonly></textarea>
+            </label>
+            <audio id="player" controls></audio>
+            <div class="row actions">
+              <button id="btn-prev" type="button" disabled>↑ 前</button>
+              <button id="btn-play" type="button" class="primary" disabled>再生</button>
+              <button id="btn-next" type="button" disabled>次 ↓</button>
+            </div>
+            <div class="row actions">
+              <button id="btn-save-title" type="button" disabled>タイトル保存</button>
+              <button id="btn-delete" type="button" disabled>削除</button>
+              <button id="btn-merge" type="button" disabled>次の文と結合</button>
+            </div>
+            <p id="viewer-status" class="muted"></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-settings" class="panel">
+        <h1>設定</h1>
+        <p class="lede">APIキーはこのPC内だけに保存します。リポジトリには置きません。</p>
+        <label class="field">
+          <span>OpenAI API キー</span>
+          <input id="cfg-api-key" type="password" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>出力ルートフォルダ</span>
+          <input id="cfg-output-root" type="text" />
+        </label>
+        <div class="grid-2">
+          <label class="field">
+            <span>長い無音とみなす秒数</span>
+            <input id="cfg-long-silence" type="number" min="0.2" step="0.1" />
+          </label>
+          <label class="field">
+            <span>残す短ポーズ（秒）</span>
+            <input id="cfg-keep-silence" type="number" min="0.05" step="0.01" />
+          </label>
+          <label class="field">
+            <span>無音しきい値（dB）</span>
+            <input id="cfg-silence-db" type="number" step="1" />
+          </label>
+          <label class="field">
+            <span>結合時の無音パッド（ms）</span>
+            <input id="cfg-merge-pad" type="number" min="0" step="50" />
+          </label>
+        </div>
+        <div class="row">
+          <button id="btn-save-config" type="button" class="primary">設定を保存</button>
+          <span id="cfg-status" class="muted"></span>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
